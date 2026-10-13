@@ -142,15 +142,42 @@
       name: dsh-balance-console
 ```
 
-### 方式一：在 Web 界面安装
+### 方式一：一行安装（推荐）
 
-哦哦，原版的web界面似乎并没有直接安装的入口，如果你已经安装插件管理插件，那么以你的管理器为准。
-
-### 方式二：让 Agent 安装
+在 DSH 会话里让 Agent 执行：
 
 ```
 plugin_manager  action: install_bundle
-                target: <克隆目录>\dsh-balance-console
+                target: https://github.com/wheatcat123/dsh-balance-console
+```
+
+或者用 Web 界面：侧边栏 **Plugins** → 安装 bundle → 目标填上面的仓库地址。
+
+DSH 会用 pnpm 从 GitHub 克隆这个包并注册到当前 profile。因为 `package.json` 就在**仓库根目录**，仓库地址可以直接用。
+
+> **若这一步报 `CRYPT_E_REVOCATION_OFFLINE` 或 `schannel` 错误**：这是 Windows 验证 GitHub 证书时查不到吊销列表（代理网络下常见），导致 git 走 HTTPS 失败。执行一次下面这条让 GitHub 依赖改走 SSH 即可（需要你已在 GitHub 登记过 SSH 公钥）：
+>
+> ```
+> git config --global url."git@github.com:".insteadOf "https://github.com/"
+> ```
+>
+> 撤销：`git config --global --unset url."git@github.com:".insteadOf`
+
+### 方式二：一行安装（npm）
+
+> 🚧 **尚未发布到 npm**。发布后即可只写包名一行安装，连 GitHub 都不用访问（对有网络限制的环境最友好）：
+>
+> ```
+> plugin_manager  action: install_bundle
+>                 target: dsh-balance-console
+> ```
+
+### 方式三：本地路径（适合要改代码）
+
+```
+git clone https://github.com/wheatcat123/dsh-balance-console.git
+plugin_manager  action: install_bundle
+                target: <克隆目录>
 ```
 
 安装后 profile 的 `package.json` 会多出 `"dsh-balance-console": "link:<该目录>"`，Loader 行 `balance-console` 随即 `active`。
@@ -295,9 +322,9 @@ $DSH_HOME/storages/dsh-balance-console.json
 ## 开发
 
 ```bash
-# 语法检查
-node --check dsh-balance-console/index.js
-node --check dsh-balance-console/client.js
+# 语法检查（在仓库根目录执行）
+node --check index.js
+node --check client.js
 ```
 
 本插件以 `link:` 方式装入 DSH profile，因此：
@@ -324,11 +351,10 @@ node --check dsh-balance-console/client.js
 ├── LICENSE                   MIT
 ├── .gitignore
 ├── .gitattributes
-├── dsh-balance-console/      ← 插件本体（安装时指向这个目录）
-│   ├── package.json          包声明 + dsh.bundle.patch + dsh.client
-│   ├── cordis.patch.yml      插入 Loader 行 `balance-console`
-│   ├── index.js              Host 半部
-│   └── client.js             Client 半部
+├── package.json              ← 插件本体（安装目标就是仓库根目录）
+├── cordis.patch.yml            插入 Loader 行 `balance-console`
+├── index.js                    Host 半部
+├── client.js                   Client 半部
 ├── docs/
 │   ├── 1.md                  开发日志（第 1–6 轮）
 │   └── 2.md                  开发日志（第 7–14 轮）
@@ -337,9 +363,9 @@ node --check dsh-balance-console/client.js
     └── dsh-balance-console-backup-20261013-105557/  第 7 轮交付态
 ```
 
-`archive/` 是历史快照，只作留档，不要用于安装。
+`package.json` 位于仓库根目录，因此 `install_bundle` 可以直接使用仓库地址，无需指定子目录。
 
-
+`docs/` 是开发日志，`archive/` 是历史快照（只作留档，不要用于安装）。发布到 npm 时这两个目录都会被 `package.json` 的 `files` 字段排除，实际只发布 6 个文件。
 
 ---
 

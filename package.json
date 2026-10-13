@@ -1,0 +1,46 @@
+{
+  "name": "dsh-balance-console",
+  "version": "1.0.0",
+  "description": "Retro console-style DeepSeek API balance, bill ledger and per-conversation cost estimator for the DeepSeek Harness Web UI. Zero dependencies.",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "balance",
+    "deepseek",
+    "token-cost"
+  ],
+  "homepage": "https://github.com/wheatcat123/dsh-balance-console#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wheatcat123/dsh-balance-console.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wheatcat123/dsh-balance-console/issues"
+  },
+  "author": "wheatcat123",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}
