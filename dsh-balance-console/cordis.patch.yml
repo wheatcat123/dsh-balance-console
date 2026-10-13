@@ -1,0 +1,5 @@
+# Installs the balance console: one Host row (balance polling, credential storage,
+# Remote namespace `balanceConsole`) and the Client half declared in dsh.client.
+- insert:
+    - id: balance-console
+      name: dsh-balance-console
