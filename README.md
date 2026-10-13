@@ -49,6 +49,8 @@
 | 共享浮窗外壳 | 余额窗、设置窗、回执窗共用一套外壳（拖动 / 缩放 / 最小化 / 置顶），每个窗口独立记忆几何信息 |
 | 侧边栏总开关 | 注册在 `sidebar.footer.action`，一键启停全部余额显示服务（浮窗、预测行、估价按钮一起消失，轮询同步停止） |
 | provider 自动显示 | 仅当会话的模型提供商匹配 `deepseek` 时显示（Host 端读取会话投影给出权威答案） |
+<img width="822" height="528" alt="image" src="https://github.com/user-attachments/assets/a4ff6a7b-76de-403b-9796-edd0eb74f66e" />
+<img width="1212" height="843" alt="image" src="https://github.com/user-attachments/assets/9aea8779-8f22-47a3-969b-e978761c401d" />
 
 ### 异常状态
 
